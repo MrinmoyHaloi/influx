@@ -1,2 +1,2 @@
 # influx
-A tool that lets you see your system info in linux
+A tool for linux used to get hardware information
