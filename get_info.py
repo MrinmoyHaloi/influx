@@ -1,20 +1,24 @@
 import re
 import os
 
+
 class GetHardwareInfo():
     def __init__(self):
         self.mem_output = os.popen("sudo dmidecode -t 17").read()
-        self.cpu_output = os.popen("sudo dmidecode -t processor").read()
-        self.gpu_output = os.popen('glxinfo | egrep "OpenGL vendor string:|Dedicated video memory|Version:|OpenGL renderer string:"').read()
-        self.motherboard_output = os.popen("sudo dmidecode -t baseboard").read()
+        self.cpu_output \
+            = os.popen("sudo dmidecode -t processor").read()
+        self.gpu_output = os.popen('glxinfo | egrep "OpenGL vendor string:|\
+            Dedicated video memory|Version:|OpenGL renderer string:"').read()
+        self.motherboard_output \
+            = os.popen("sudo dmidecode -t baseboard").read()
         self.vendor_id = os.popen("lspci -vn | grep VGA").read()
-        self.vendor_id = re.findall(r"(?<=0300: ).*(?=\(rev)", self.vendor_id)[0].split(":")[0]
+        self.vendor_id = re.findall(r"(?<=0300: ).*(?=\(rev)",\
+                                    self.vendor_id)[0].split(":")[0]
 
         self.mem_info = {}
         self.cpu_info = {}
         self.gpu_info = {}
         self.motherboard_info = {}
-
 
     def get_mem_info(self):
         self.mem_info.update({"form_factor": re.findall(r"(?<=Form\sFactor:\s).*",
@@ -70,18 +74,12 @@ class GetHardwareInfo():
 
     def get_motherboard_info(self):
         self.motherboard_info.update({"manufacturer": re.findall(r"(?<=Manufacturer:\s).*",
-                        self.motherboard_output)[0]})
+                                    self.motherboard_output)[0]})
         self.motherboard_info.update({"serial_number": re.findall(r"(?<=Serial\sNumber:\s).*",
-                        self.motherboard_output)[0]})
+                                    self.motherboard_output)[0]})
         self.motherboard_info.update({"version": re.findall(r"(?<=Version:\s).*",
-                        self.motherboard_output)[0]})
+                                    self.motherboard_output)[0]})
         self.motherboard_info.update({"asset_tag": re.findall(r"(?<=Asset\sTag:\s).*",
-                        self.motherboard_output)[0]})
+                                    self.motherboard_output)[0]})
         self.motherboard_info.update({"product": re.findall(r"(?<=Product\sName:\s).*",
-                        self.motherboard_output)[0]})
-
-
-
-
-
-
+                                    self.motherboard_output)[0]})
