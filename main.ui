@@ -2,13 +2,65 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkMessageDialog">
+    <property name="can_focus">False</property>
+    <property name="type_hint">dialog</property>
+    <property name="message_type">error</property>
+    <property name="text" translatable="yes">Required libraries not installed</property>
+    <property name="secondary_text" translatable="yes">Mesa-utils, pci-tools not installed</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="homogeneous">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Install</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Exit</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkAboutDialog" id="about_dialog">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
     <property name="program_name">Influx</property>
     <property name="version">0.0.1</property>
     <property name="copyright" translatable="yes">Copyright Mrinmoy Haloi 2022</property>
-    <property name="comments" translatable="yes">A tool for linux used to get hardware information</property>
+    <property name="comments" translatable="yes">A application for Linux that displays hardware information</property>
     <property name="website">https://github.com/mrinmoyhaloi/influx</property>
     <property name="website_label" translatable="yes">Github</property>
     <property name="authors">Mrinmoy Haloi</property>
@@ -99,7 +151,7 @@
       </packing>
     </child>
   </object>
-  <object class="GtkApplicationWindow" id="app_window">
+  <object class="GtkWindow" id="app_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Influx</property>
     <property name="default_width">450</property>
@@ -147,11 +199,42 @@
         <property name="can_focus">True</property>
         <property name="show_border">False</property>
         <property name="enable_popup">True</property>
+        <signal name="switch-page" handler="setInfo" swapped="no"/>
         <child>
-          <object class="GtkLabel" id="cpu_label">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_markup">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">CPU</property>
+                <attributes>
+                  <attribute name="style" value="normal"/>
+                  <attribute name="weight" value="ultrabold"/>
+                  <attribute name="scale" value="1.5"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">27</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="cpu_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
         </child>
         <child type="tab">
@@ -165,9 +248,38 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="mem_label">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Memory</property>
+                <attributes>
+                  <attribute name="weight" value="ultrabold"/>
+                  <attribute name="scale" value="1.5"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">27</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="mem_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="position">1</property>
@@ -185,12 +297,41 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="gpu_label">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="use_markup">True</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Graphics</property>
+                <attributes>
+                  <attribute name="weight" value="ultrabold"/>
+                  <attribute name="scale" value="1.5"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">27</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="gpu_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="use_markup">True</property>
+                <property name="wrap">True</property>
+                <property name="wrap_mode">word-char</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="position">2</property>
@@ -208,9 +349,38 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="motherboard_label">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Motherboard</property>
+                <attributes>
+                  <attribute name="weight" value="ultrabold"/>
+                  <attribute name="scale" value="1.5"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="padding">27</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="motherboard_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="position">3</property>
