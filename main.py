@@ -6,19 +6,19 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
 
-
-class Main:
+class Main(Gtk.ApplicationWindow):
     """The main class that initializes the application."""
 
     def __init__(self):
         """Init function."""
-        self.builder = Gtk.Builder()
-        self.builder.add_from_file("main.ui")
+        # self.builder = Gtk.Builder()
+        # self.builder.add_from_file("main.ui")
+        self.builder = Gtk.Builder.new_from_file("main.ui")
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("app_window")
 
-        # gets the objects needed from the ui file
+        # get the objects needed from the ui file
         self.about = self.builder.get_object("about_dialog")
         self.preferences = self.builder.get_object("preferences_dialog")
         self.mem_label = self.builder.get_object("mem_label")
@@ -26,7 +26,7 @@ class Main:
         self.gpu_label = self.builder.get_object("gpu_label")
         self.motherboard_label = self.builder.get_object("motherboard_label")
 
-        # initializes the text variables for the labels
+        # initialize the text variables for the labels
         self.label_mem_info = ""
         self.label_cpu_info = ""
         self.label_gpu_info = ""
@@ -35,7 +35,7 @@ class Main:
         self.window.show_all()
         self.window.connect("destroy", Gtk.main_quit)
 
-        # initializes the GetHardwareInfo class for getting the hardware info
+        # initialize the GetHardwareInfo class for getting the hardware info
         self.info = get_info.GetHardwareInfo()
 
         self.info.get_cpu_info()
@@ -99,6 +99,6 @@ class Main:
 
 
 if __name__ == "__main__":
-    # runs the application
+    # run the application
     Main()
     Gtk.main()
